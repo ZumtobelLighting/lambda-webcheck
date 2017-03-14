@@ -91,7 +91,6 @@ exports.handler = (event, context, callback) => {
 
       instances.forEach(function(instance){
         const url = `https://${instance}.siteworx.io/api/v1/version`;
-        console.log(`checking ${url}`);
 
         request.get(url, {timeout: timeout})
           .then(function(response, body){
