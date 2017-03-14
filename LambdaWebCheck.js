@@ -1,5 +1,7 @@
 // Check if a url is responding and logs an event to AWS CloudWatch
-// (C) ActValue 2016 - pmosconi
+// initial (C) ActValue 2016 - pmosconi
+// (c) Digital Lumens Inc.
+// Brian Del Vecchio <bdv@digitallumens.com>
 
 // jshint esversion: 6
 // jshint node: true
@@ -100,7 +102,6 @@ exports.handler = (event, context, callback) => {
           })
           .catch(errors.StatusCodeError, function (reason) {
               // The server responded with a status codes other than 2xx.
-              // Check reason.statusCode
               console.log(`${instance} statusCode: ${reason.statusCode}`);
               putMetricData(instance, 1);
           })
@@ -117,4 +118,6 @@ exports.handler = (event, context, callback) => {
 
 };
 
+
+// invoke with `node LambdaWebCheck.js handler`
 require('make-runnable');
