@@ -9,9 +9,10 @@
 // external dependencies
 const AWS = require('aws-sdk');
 const request = require('request-promise');
+const errors = require('request-promise/errors');
 const _ = require('underscore');
 
-const timeout = 10000; // ms to wait for response
+const timeout = 1000; // ms to wait for response
 
 // get reference to cloudwatch
 const cloudwatch = new AWS.CloudWatch();
@@ -68,8 +69,13 @@ exports.handler = (event, context, callback) => {
             console.log(`${instance} response: ${response}`);
 
           })
-          .catch(function(reason){
-            console.log("request error: " + reason);
+          .catch(errors.StatusCodeError, function (reason) {
+              // The server responded with a status codes other than 2xx.
+              // Check reason.statusCode
+              console.log(`${instance} statusCode: ${reason.statusCode}`);
+          })
+          .catch(errors.RequestError, function (reason) {
+            console.log(`${instance} error: ${reason}`);
           });
       });
 
