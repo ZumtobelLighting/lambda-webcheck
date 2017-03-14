@@ -14,7 +14,7 @@ const request = require('request-promise');
 const errors = require('request-promise/errors');
 const _ = require('underscore');
 
-const timeout = 3000; // ms to wait for response
+const timeout = 2000; // ms to wait for response
 
 const cloudwatch = new AWS.CloudWatch();
 
